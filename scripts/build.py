@@ -108,6 +108,8 @@ def main():
     word("SEAM_Store_restorePurchasesAction", 0xE12FFF1E)  # bx lr after native epilogue
     word("SEAM_StoreItem_purchaseAction", 0xE12FFF1E)  # common touch/controller purchase entry
     word("SEAM_StoreItem_purchaseEnableBranch", 0xE1A00000)  # always disable purchase button
+    word("SEAM_StoreBrowser_refreshOwnedLabels", 0xE12FFF1E)  # store-only ownership captions
+    word("SEAM_StoreItem_readOwnedFlag", 0xE3A00000)  # no ownership state in demo detail screen
     word("SEAM_StoreBrowser_rowZeroRegister", 0xE3A04000)  # r4 = native row's zero argument
     word("SEAM_StoreBrowser_rowServiceBranch", branch(registry["SEAM_StoreBrowser_rowServiceBranch"],
                                                     registry["SEAM_StoreBrowser_rowCreate"]))

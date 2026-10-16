@@ -2,9 +2,9 @@
 
 A standalone, offline, browse-only demonstration of the original Minecraft: New Nintendo 3DS Edition store. Targets the **USA 1.9.19 update (v9408)**.
 
-The game's native store screens, category buttons, scrolling lists, skin previews, pack artwork, descriptions and preview navigation are retained. The remote catalog lookup is replaced with the game's own local catalog mappings. Live prices are left blank. Listing order follows the local item-code map; this is not a recording of the historical server catalog.
+The game's native store screens, category buttons, scrolling lists, skin previews, pack artwork, descriptions and preview navigation are retained. The remote catalog lookup is replaced with the game's own local catalog mappings, with regional aliases collapsed by name and preview artwork. Live prices are left blank. Listing order follows the local item-code map; this is not a recording of the historical server catalog.
 
-Purchase buttons are disabled. The common purchase handler used by touch and controller input returns without doing anything. Restore Purchases is inactive. This mod does not grant licenses, change ownership flags, install packs or contact Nintendo's commerce service through the store.
+Purchase buttons are disabled. The common purchase handler used by touch and controller input returns without doing anything. Restore Purchases is inactive. Existing ownership labels are suppressed within the demo store. This mod does not grant licenses, change saved ownership flags, install packs or contact Nintendo's commerce service through the store.
 
 ## Install
 

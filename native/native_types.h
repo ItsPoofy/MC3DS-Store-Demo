@@ -16,6 +16,7 @@ typedef struct CatalogNode {
     struct CatalogNode *right;
     NativeString item_code;
     NativeString name;
+    NativeString artwork;
 } CatalogNode;
 
 typedef struct {

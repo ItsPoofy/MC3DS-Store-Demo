@@ -5,22 +5,40 @@
 typedef int (*AddRow)(void *, const void *, u32, const NativeString *);
 typedef void (*Rebuild)(void *);
 typedef void *(*Allocate)(u32, u32);
+typedef int (*StringCompare)(const NativeString *, const NativeString *);
 
-static StoreItem *fill_nodes(void *screen, CatalogNode *node,
-                             StoreItem *next, StoreItem *limit, u32 *index) {
+typedef struct {
+    void *screen;
+    StoreItem *limit;
+    CatalogNode *listed[100];
+    u32 count;
+} CatalogBuild;
+
+static int already_listed(const CatalogBuild *build, const CatalogNode *node) {
+    for (u32 i = 0; i < build->count; ++i) {
+        const CatalogNode *other = build->listed[i];
+        if (((StringCompare)SEAM_gstd_string_compare)(&node->name, &other->name) == 0 &&
+            ((StringCompare)SEAM_gstd_string_compare)(&node->artwork, &other->artwork) == 0)
+            return 1;
+    }
+    return 0;
+}
+
+static StoreItem *fill_nodes(CatalogBuild *build, CatalogNode *node, StoreItem *next) {
     if (!node) return next;
-    next = fill_nodes(screen, node->left, next, limit, index);
+    next = fill_nodes(build, node->left, next);
     const char *code = node->item_code.text;
     u32 length = ((const u32 *)code)[-1];
-    if (length && length < sizeof(next->item_code) && next != limit) {
+    if (length && length < sizeof(next->item_code) && next != build->limit &&
+        !already_listed(build, node)) {
         for (u32 i = 0; i < sizeof(*next); ++i) ((u8 *)next)[i] = 0;
         for (u32 i = 0; i < length; ++i) next->item_code[i] = code[i];
         next->price.text = (char *)SEAM_EmptyString;
-        ((AddRow)SEAM_StoreBrowser_addRow)(screen, 0, *index, &node->name);
-        ++*index;
+        ((AddRow)SEAM_StoreBrowser_addRow)(build->screen, 0, build->count, &node->name);
+        build->listed[build->count++] = node;
         ++next;
     }
-    return fill_nodes(screen, node->right, next, limit, index);
+    return fill_nodes(build, node->right, next);
 }
 
 /* This entry replaces only the native store's remote catalog enumerator. */
@@ -39,9 +57,11 @@ void demo_fill_catalog(void *screen) {
     }
     if (!items->begin) return;
     /* Prices are empty shared strings: no remote currency or ownership state. */
-    u32 index = 0;
-    items->end = fill_nodes(screen, map->header->parent, items->begin,
-                            items->capacity, &index);
+    CatalogBuild build;
+    build.screen = screen;
+    build.limit = items->capacity;
+    build.count = 0;
+    items->end = fill_nodes(&build, map->header->parent, items->begin);
 }
 
 void *demo_tick(void *screen) {

@@ -7,9 +7,11 @@
 #define SEAM_CatalogPayloadEnd 0x003E0E28u
 #define SEAM_gstd_allocate 0x001010CBu
 #define SEAM_EmptyString 0x00B3EB10u
+#define SEAM_gstd_string_compare 0x00137850u
 #define SEAM_StoreBrowser_addRow 0x003DFF68u
 #define SEAM_StoreBrowser_rebuild 0x003DFD54u
 #define SEAM_StoreBrowser_tick 0x003E0FACu
+#define SEAM_StoreBrowser_refreshOwnedLabels 0x003DEF70u
 #define SEAM_StoreBrowser_loadCatalog 0x003DF1B0u
 #define SEAM_Store_setupCommerce 0x001AF7DCu
 #define SEAM_Store_setupConnection 0x001AF7E0u
@@ -18,6 +20,7 @@
 #define SEAM_Store_restorePurchasesAction 0x001AF6A4u
 #define SEAM_StoreItem_purchaseAction 0x002DF950u
 #define SEAM_StoreItem_purchaseEnableBranch 0x002E008Cu
+#define SEAM_StoreItem_readOwnedFlag 0x002E0510u
 #define SEAM_StoreBrowser_rowZeroRegister 0x003DFF88u
 #define SEAM_StoreBrowser_rowServiceBranch 0x003DFF8Cu
 #define SEAM_StoreBrowser_rowCreate 0x003E0080u
